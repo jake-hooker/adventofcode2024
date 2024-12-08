@@ -55,10 +55,10 @@ def calculate_distances(left, right):
     return total_distance
 
 def calculate_similarity(left, right):
-    """Calculate the similarity score between two equal length sorted lists
+    """Calculate the similarity score between two sorted lists
     
-    args: left (list): a list of integers of len(n)
-          right (list): a list of integers of len(n)
+    args: left (list): a list of integers
+          right (list): a list of integers
         
     returns: similarity_score (int): similarity score between the two lists
     """
