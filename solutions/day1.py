@@ -1,3 +1,5 @@
+from time import perf_counter
+
 """
 Pair up the smallest number in the left list with the smallest number in the right list, then the second-smallest left number with the second-smallest right number, and so on.
 
@@ -11,7 +13,7 @@ def process_input(input_file):
     """Read the input file and split it into two lists
     args: input_file (str): path to the input file
 
-    returns: two unsorted lists (left, right) of integers
+    returns: two sorted lists (left, right) of integers
     """
 
     left = list()
@@ -25,7 +27,7 @@ def process_input(input_file):
             right.append(int(new[1]))
     file.close()
 
-    return left, right
+    return sort_list(left), sort_list(right)
 
 def sort_list(list):
     """Sort a list in ascending order
@@ -38,21 +40,39 @@ def sort_list(list):
 
     return list
 
-def calculate_distances(sorted_list1, sorted_list2):
-    """Calculate the total distance between two sorted lists
+def calculate_distances(left, right):
+    """Calculate the total distance between two equal length sorted lists
     
-    args: sorted_list1 (list): sorted list of integers
-          sorted_list2 (list): sorted list of integers
+    args: left (list): a list of integers of len(n)
+          right (list): a list of integers of len(n)
         
     returns: total_distance (int): total distance between the two lists
     """
     total_distance = 0
-    for i, j in zip(sorted_list1, sorted_list2):
+    for i, j in zip(left, right):
         total_distance += abs(i - j)
 
     return total_distance
 
+def calculate_similarity(left, right):
+    """Calculate the similarity score between two sorted lists
+    
+    args: left (list): a list of integers
+          right (list): a list of integers
+        
+    returns: similarity_score (int): similarity score between the two lists
+    """
+    total_similarity_score = 0
+
+    for element in left:
+        total_similarity_score += (element * right.count(element))
+
+    return total_similarity_score
+
 if __name__ == "__main__":
-    left, right = process_input('./inputs/day1.txt')
-    total_distance = calculate_distances(sort_list(left), sort_list(right))
-    print(total_distance)
+    t1_start = perf_counter() 
+    left, right = process_input('../inputs/day1.txt')
+    print("Total distance:", calculate_distances(left, right))
+    print("Similarity score:", calculate_similarity(left, right))
+    t1_stop = perf_counter()
+    print("Elapsed time:", t1_stop-t1_start)
